@@ -1,7 +1,7 @@
 # Image: dnssec-tldns-a
 # Startup a docker container as BIND master for DNS TLDs
 
-FROM dape16/dnssec-bind
+FROM dnssecworkshop/dnssec-bind
 
 MAINTAINER dape16 "dockerhub@arminpech.de"
 
