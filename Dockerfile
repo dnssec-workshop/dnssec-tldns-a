@@ -27,14 +27,15 @@ RUN     a2dissite 000-default
 RUN     a2ensite sld-registrar
 RUN     a2enmod proxy proxy_http
 
+# Setup dataabase for whois/registrar service
+RUN     /etc/init.d/mysql start
+RUN     mysql -uroot -proot -e 'create database sld charset utf8;'
+RUN     mysql -uroot -proot sld < /etc/whoisd/sld.sql
+
 # Start services using supervisor
 RUN     mkdir -p /var/log/supervisor
 
 EXPOSE  22 53 80
 CMD     [ "/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/dnssec-tldns-a.conf" ]
-
-# Setup dataabase for whois/registrar service
-CMD     mysql -uroot -proot -e 'create database sld charset utf8;'
-CMD     mysql -uroot -proot sld < /etc/whoisd/sld.mysql
 
 # vim: set syntax=docker tabstop=2 expandtab:
