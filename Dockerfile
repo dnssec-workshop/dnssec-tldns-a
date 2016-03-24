@@ -28,13 +28,7 @@ RUN     a2ensite sld-registrar
 RUN     a2enmod proxy proxy_http
 
 # Setup dataabase for whois/registrar service
-RUN     /usr/sbin/mysqld --bootstrap --verbose=1 << EOF
-          USE mysql;
-          FLUSH PRIVILEGES;
-          GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
-          UPDATE user SET password=PASSWORD("root") WHERE user='root'
-          CREATE DATABASE sld CHARSET utf8;
-EOF
+RUN     /usr/sbin/mysqld --bootstrap --verbose=1 --init-file=/etc/mysql/init-db.sql
 RUN     mysql -uroot -proot sld < /etc/whoisd/sld.sql
 
 # Start services using supervisor
