@@ -28,6 +28,7 @@ RUN     a2ensite sld-registrar
 RUN     a2enmod proxy proxy_http
 
 # Setup dataabase for whois/registrar service
+RUN     /usr/bin/mysql_install_db --user mysql
 RUN     /usr/sbin/mysqld --bootstrap --verbose=1 --init-file=/etc/mysql/init-db.sql
 RUN     /usr/sbin/mysqld --bootstrap --verbose=1 --init-file=/etc/whoisd/sld.sql
 
