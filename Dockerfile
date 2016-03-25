@@ -31,9 +31,9 @@ RUN     a2enmod proxy proxy_http
 RUN     /usr/bin/mysql_install_db --user mysql
 RUN     /usr/sbin/mysqld --bootstrap --verbose=1 --init-file=/etc/mysql/init-db.sql
 RUN     /usr/sbin/mysqld --bootstrap --verbose=1 --init-file=/etc/whoisd/sld.sql
-RUN     cd /usr ; /usr/bin/mysqld_safe &
-RUN     /usr/bin/mysqladmin -u root password 'root'
-RUN     /usr/bin/mysqladmin -u root -h dnssec-tldns-a password 'root'
+RUN     cd /usr ; /usr/bin/mysqld_safe & && \
+          /usr/bin/mysqladmin -u root password 'root' && \
+          /usr/bin/mysqladmin -u root -h dnssec-tldns-a password 'root'
 
 # Start services using supervisor
 RUN     mkdir -p /var/log/supervisor
