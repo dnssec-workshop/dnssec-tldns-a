@@ -5,7 +5,7 @@ FROM dnssecworkshop/dnssec-bind
 
 MAINTAINER dape16 "dockerhub@arminpech.de"
 
-LABEL RELEASE=20160325-1611
+LABEL RELEASE=20160325-2127
 
 # Set timezone
 ENV     TZ=Europe/Berlin
@@ -16,7 +16,8 @@ RUN     apt-get update
 RUN     apt-get upgrade -y
 RUN     echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 RUN     echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
-RUN     apt-get install -y --no-install-recommends apache2 mysql-server golang-go
+RUN     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+          apache2 mysql-server golang-go
 
 # Deploy DNSSEC workshop material
 RUN     cd /root && git clone https://github.com/dnssec-workshop/dnssec-data && \
@@ -31,9 +32,6 @@ RUN     a2enmod proxy proxy_http
 RUN     /usr/bin/mysql_install_db --user mysql
 RUN     /usr/sbin/mysqld --bootstrap --verbose=1 --init-file=/etc/mysql/init-db.sql
 RUN     /usr/sbin/mysqld --bootstrap --verbose=1 --init-file=/etc/whoisd/sld.sql
-RUN     cd /usr ; /usr/bin/mysqld_safe & && \
-          /usr/bin/mysqladmin -u root password 'root' && \
-          /usr/bin/mysqladmin -u root -h dnssec-tldns-a password 'root'
 
 # Start services using supervisor
 RUN     mkdir -p /var/log/supervisor
