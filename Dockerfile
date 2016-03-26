@@ -24,7 +24,7 @@ RUN     cd /root && git clone https://github.com/dnssec-workshop/dnssec-data && 
           rsync -v -rptgoD --copy-links /root/dnssec-data/dnssec-tldns-a/ /
 
 # Download whoisd
-RUN     export GOPATH=~/gocode && \
+RUN     export GOPATH=/root/gocode && \
           go get github.com/openprovider/whoisd && \
           go get github.com/go-sql-driver/mysql
 
