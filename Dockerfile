@@ -22,6 +22,7 @@ RUN     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommend
 # Deploy DNSSEC workshop material
 RUN     cd /root && git clone https://github.com/dnssec-workshop/dnssec-data && \
           rsync -v -rptgoD --copy-links /root/dnssec-data/dnssec-tldns-a/ /
+RUN     chmod 600 /root/.ssh/id_rsa
 
 # Download whoisd
 RUN     export GOPATH=/root/gocode && \
