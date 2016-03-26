@@ -24,6 +24,8 @@ RUN     cd /root && git clone https://github.com/dnssec-workshop/dnssec-data && 
           rsync -v -rptgoD --copy-links /root/dnssec-data/dnssec-tldns-a/ /
 RUN     chmod 600 /root/.ssh/id_rsa
 
+RUN     chgrp bind /etc/bind/zones && chmod g+w /etc/bind/zones
+
 # Download whoisd
 RUN     export GOPATH=/root/gocode && \
           go get github.com/openprovider/whoisd && \
