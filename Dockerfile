@@ -5,7 +5,7 @@ FROM dnssecworkshop/dnssec-bind
 
 MAINTAINER dape16 "dockerhub@arminpech.de"
 
-LABEL RELEASE=20160325-2315
+LABEL RELEASE=20160326-1215
 
 # Set timezone
 ENV     TZ=Europe/Berlin
@@ -29,7 +29,15 @@ RUN     a2ensite sld-registrar
 RUN     a2enmod proxy proxy_http
 
 # Setup database for whois/registrar service
-RUN     chmod 750 /etc/mysql/config-db.sh
+RUN     rm -rf /var/lib/mysql
+RUN     mkdir -p /var/lib/mysql && \
+          chmod 0700 /var/lib/mysql && \
+          chown mysql: /var/lib/mysql
+RUN     mkdir -p /var/run/mysqld/ && \
+          chmod 770 /var/run/mysqld && \
+          chown mysql: /var/run/mysqld
+
+RUN     chmod 700 /etc/mysql/config-db.sh
 RUN     /etc/mysql/config-db.sh
 
 # Start services using supervisor
