@@ -5,7 +5,7 @@ FROM dnssecworkshop/dnssec-bind
 
 MAINTAINER dape16 "dockerhub@arminpech.de"
 
-LABEL RELEASE=20171030-2238
+LABEL RELEASE=20171031-0003
 
 # Set timezone
 ENV     TZ=Europe/Berlin
@@ -28,7 +28,7 @@ RUN     chgrp bind /etc/bind/zones && chmod g+w /etc/bind/zones
 
 # Download whoisd
 RUN     export GOPATH=/root/gocode && \
-          go get github.com/openprovider/whoisd && \
+          go get github.com/pecharmin/whoisd && \
           go get github.com/go-sql-driver/mysql
 
 # Configure webserver
