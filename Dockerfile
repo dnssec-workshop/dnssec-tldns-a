@@ -37,6 +37,10 @@ RUN     a2ensite sld-registrar
 RUN     a2enmod proxy proxy_http
 
 # Setup mysql database
+RUN     mkdir -p /var/run/mysqld/ && \
+          chmod 770 /var/run/mysqld && \
+          chown mysql: /var/run/mysqld
+
 RUN     chmod 700 /etc/mysql/config-db.sh
 RUN     /etc/mysql/config-db.sh
 
