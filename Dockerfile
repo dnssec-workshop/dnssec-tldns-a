@@ -36,15 +36,7 @@ RUN     a2dissite 000-default
 RUN     a2ensite sld-registrar
 RUN     a2enmod proxy proxy_http
 
-# Setup database for whois/registrar service
-RUN     rm -rf /var/lib/mysql
-RUN     mkdir -p /var/lib/mysql && \
-          chmod 0700 /var/lib/mysql && \
-          chown mysql: /var/lib/mysql
-RUN     mkdir -p /var/run/mysqld/ && \
-          chmod 770 /var/run/mysqld && \
-          chown mysql: /var/run/mysqld
-
+# Setup mysql database
 RUN     chmod 700 /etc/mysql/config-db.sh
 RUN     /etc/mysql/config-db.sh
 
